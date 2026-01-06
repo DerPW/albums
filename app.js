@@ -66,14 +66,22 @@ if (importCsvBtn && importCsvFile) {
                 try {
                     const entries = parseCSV(evt.target.result);
                     entries.forEach(({artist, album, song, date}) => {
-                        let existing = albums.find(a => a.album.toLowerCase() === album.toLowerCase() && a.artist.toLowerCase() === artist.toLowerCase());
+                        let existing = albums.find(a => a.album.toLowerCase() === album.toLowerCase());
                         if (existing) {
                             existing.count++;
+                            // Füge Interpret hinzu, falls noch nicht vorhanden
+                            if (!Array.isArray(existing.artists)) {
+                                existing.artists = [existing.artist];
+                                delete existing.artist;
+                            }
+                            if (!existing.artists.some(art => art.toLowerCase() === artist.toLowerCase())) {
+                                existing.artists.push(artist);
+                            }
                             if (song && !existing.songs.includes(song)) existing.songs.push(song);
                             if (date && !existing.date) existing.date = date;
                         } else {
                             let songs = song ? [song] : [];
-                            albums.push({ album, artist, count: 1, songs, date: date || null });
+                            albums.push({ album, artists: [artist], count: 1, songs, date: date || null });
                         }
                     });
                 } catch (err) {
@@ -109,7 +117,9 @@ function renderList(filter = '') {
     if (filter) {
         const q = filter.toLowerCase();
         filtered = albums.filter(a => {
-            if ((a.album + ' ' + a.artist).toLowerCase().includes(q)) return true;
+            const artistsList = Array.isArray(a.artists) ? a.artists : [a.artist];
+            const artistsText = artistsList.join(' ');
+            if ((a.album + ' ' + artistsText).toLowerCase().includes(q)) return true;
             if (a.songs && a.songs.some(song => song.toLowerCase().includes(q))) return true;
             return false;
         });
@@ -145,7 +155,8 @@ function renderList(filter = '') {
         
         const artistSpan = document.createElement('div');
         artistSpan.className = 'album-artist';
-        artistSpan.textContent = a.artist;
+        const artistsList = Array.isArray(a.artists) ? a.artists : [a.artist];
+        artistSpan.textContent = artistsList.join(', ');
         if (a.date) {
             const year = a.date.split('-')[0];
             artistSpan.textContent += ' • ' + year;
@@ -161,7 +172,7 @@ function renderList(filter = '') {
         delBtn.title = 'Album löschen';
         delBtn.innerHTML = '<svg width="20" height="20" style="vertical-align:middle;"><use href="#icon-trash" /></svg>';
         delBtn.onclick = () => {
-            const idx = albums.findIndex(x => x.album === a.album && x.artist === a.artist);
+            const idx = albums.findIndex(x => x.album === a.album);
             if (idx !== -1) {
                 albums.splice(idx, 1);
                 renderList();
@@ -206,7 +217,8 @@ function renderList(filter = '') {
 }
 
 function updateStats() {
-    const uniqueArtists = new Set(albums.map(a => a.artist.toLowerCase())).size;
+    const allArtists = albums.flatMap(a => Array.isArray(a.artists) ? a.artists : [a.artist]);
+    const uniqueArtists = new Set(allArtists.map(art => art.toLowerCase())).size;
     const uniqueAlbums = albums.length;
     const uniqueSongs = new Set(albums.flatMap(a => a.songs || []).map(s => s.toLowerCase())).size;
     
@@ -279,14 +291,26 @@ importFile.addEventListener('change', e => {
                 if (Array.isArray(imported)) {
                     // Merge logic: add counts if already exists
                     imported.forEach(newAlbum => {
-                        const existing = albums.find(a => a.album.toLowerCase() === newAlbum.album.toLowerCase() && a.artist.toLowerCase() === newAlbum.artist.toLowerCase());
+                        const existing = albums.find(a => a.album.toLowerCase() === newAlbum.album.toLowerCase());
                         if (existing) {
                             existing.count += newAlbum.count || 1;
+                            // Merge artists
+                            const newArtists = Array.isArray(newAlbum.artists) ? newAlbum.artists : [newAlbum.artist];
+                            if (!Array.isArray(existing.artists)) {
+                                existing.artists = [existing.artist];
+                                delete existing.artist;
+                            }
+                            newArtists.forEach(art => {
+                                if (!existing.artists.some(a => a.toLowerCase() === art.toLowerCase())) {
+                                    existing.artists.push(art);
+                                }
+                            });
                             if (newAlbum.date && !existing.date) existing.date = newAlbum.date;
                         } else {
+                            const artists = Array.isArray(newAlbum.artists) ? newAlbum.artists : [newAlbum.artist];
                             albums.push({
                                 album: newAlbum.album,
-                                artist: newAlbum.artist,
+                                artists: artists,
                                 count: newAlbum.count || 1,
                                 songs: newAlbum.songs || [],
                                 date: newAlbum.date || null
