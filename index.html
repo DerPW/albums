@@ -8,35 +8,49 @@
 </head>
 <body>
     <div class="container">
-        <div id="statsInfo" class="stats-info" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; font-size: 0.9rem; color: #666;">
-            <span><strong id="artistCount">0</strong> Künstler</span>
-            <span>•</span>
-            <span><strong id="albumCount">0</strong> Alben</span>
-            <span>•</span>
-            <span><strong id="songCount">0</strong> Songs</span>
-        </div>
-        <div class="album-filter-row">
-            <!-- Platzhalter, wird nach unten verschoben -->
-        </div>
-        <div class="input-group">
-            <input type="text" id="albumInput" placeholder="Suchen..." autocomplete="off">
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
-            <div class="actions">
-                <button id="importBtn">Importieren</button>
-                <button id="importCsvBtn">CSV-Import</button>
-                <button id="exportBtn">Exportieren</button>
-                <input type="file" id="importFile" accept="application/json" style="display:none" multiple>
-                <input type="file" id="importCsvFile" accept=".csv,text/csv" style="display:none" multiple>
+        <!-- Header-Bereich: Title, Stats, Suche, Import/Export -->
+        <div class="header-section">
+            <div id="statsInfo" class="stats-info" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; font-size: 1.05rem; color: #666;">
+                <span><strong id="artistCount">0</strong> Künstler</span>
+                <span>•</span>
+                <span><strong id="albumCount">0</strong> Alben</span>
+                <span>•</span>
+                <span><strong id="songCount">0</strong> Songs</span>
             </div>
-            <div class="actions">
-                <button id="deleteAllBtn">Alle löschen</button>
+            <div class="album-filter-row">
+                <!-- Platzhalter, wird nach unten verschoben -->
+            </div>
+            <div class="input-group">
+                <input type="text" id="albumInput" placeholder="Suchen..." autocomplete="off">
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 0;">
+                <div class="actions">
+                    <button id="importBtn">Importieren</button>
+                    <button id="importCsvBtn">CSV-Import</button>
+                    <button id="exportBtn">Exportieren</button>
+                    <input type="file" id="importFile" accept="application/json" style="display:none" multiple>
+                    <input type="file" id="importCsvFile" accept=".csv,text/csv" style="display:none" multiple>
+                </div>
+                <div class="actions">
+                    <button id="deleteAllBtn">Alle löschen</button>
+                </div>
             </div>
         </div>
-        <!-- Sortierung entfernt, wird immer high -> low ausgeführt -->
-        <ul id="suggestions" class="suggestions"></ul>
-        <ul id="albumList" class="album-list"></ul>
+        
+        <!-- Sortierungs-Bereich -->
+        <div class="sort-section">
+            <button id="sortCount" class="sort-btn">Vorkommen ↓</button>
+            <button id="sortYear" class="sort-btn">Jahr ↓</button>
+            <button id="sortAlbum" class="sort-btn">Album ↓</button>
+            <button id="sortArtist" class="sort-btn">Interpret ↓</button>
         </div>
+        
+        <!-- Album-Listen-Bereich -->
+        <div class="list-section">
+            <ul id="suggestions" class="suggestions"></ul>
+            <ul id="albumList" class="album-list"></ul>
+        </div>
+    </div>
         <div class="darkmode-switch">
             <span class="icon-sun"><svg width="22" height="22"><use href="#icon-sun" /></svg></span>
             <label class="switch">

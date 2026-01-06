@@ -62,6 +62,7 @@ body.dark .stats-info {
 }
 .stats-info strong {
     color: #1976d2;
+    font-size: 1.2rem;
 }
 body.dark .stats-info strong {
     color: #ffa726;
@@ -269,21 +270,38 @@ body.dark .delete-btn:hover {
     background: #2d2d2d;
     color: #ff5252;
 }
-body.dark .actions button {
-    background: #333;
-    color: #e0e0e0;
-    border: 1px solid #444;
-}
-body.dark .actions button:hover {
-    background: #444;
-}
 .container {
     max-width: 500px;
     margin: 40px auto;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 0;
+    overflow: hidden;
+}
+.header-section {
     padding: 32px 24px 24px 24px;
+    border-bottom: 2px solid #e0e0e0;
+}
+body.dark .header-section {
+    border-bottom-color: #333;
+}
+.sort-section {
+    padding: 16px 24px;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0e0e0;
+}
+body.dark .sort-section {
+    background: #1a1d1f;
+    border-bottom-color: #333;
+}
+.list-section {
+    padding: 16px 0;
 }
 h1 {
     text-align: center;
@@ -397,4 +415,56 @@ h1 {
     justify-content: flex-end;
     gap: 8px;
     margin-top: 16px;
+}
+.actions button {
+    padding: 6px 12px;
+    background: #e3e8f0;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.actions button:hover {
+    background: #d0d8e0;
+}
+body.dark .actions button {
+    background: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+body.dark .actions button:hover {
+    background: #444;
+}
+.sort-btn {
+    padding: 6px 12px;
+    background: #e3e8f0;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.sort-btn:hover {
+    background: #d0d8e0;
+}
+.sort-btn.active {
+    background: #1976d2;
+    color: #fff;
+    border-color: #1976d2;
+}
+body.dark .sort-btn {
+    background: #333;
+    color: #e0e0e0;
+    border-color: #444;
+}
+body.dark .sort-btn:hover {
+    background: #444;
+}
+body.dark .sort-btn.active {
+    background: #ffa726;
+    color: #23272a;
+    border-color: #ffa726;
 }

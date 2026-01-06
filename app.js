@@ -110,6 +110,8 @@ if (importTxtBtn && importTxtFile) {
 }
 
 let albums = [];
+let currentSort = { field: 'count', direction: 'desc' };
+
 // Render-Funktion mit neuer Suchlogik (inkl. Songnamen)
 function renderList(filter = '') {
     albumList.innerHTML = '';
@@ -124,7 +126,31 @@ function renderList(filter = '') {
             return false;
         });
     }
-    filtered = [...filtered].sort((a, b) => b.count - a.count);
+    // Dynamische Sortierung basierend auf currentSort
+    filtered = [...filtered].sort((a, b) => {
+        let aVal, bVal;
+        switch(currentSort.field) {
+            case 'count':
+                aVal = a.count || 0;
+                bVal = b.count || 0;
+                break;
+            case 'year':
+                aVal = a.date ? parseInt(a.date.split('-')[0]) : 0;
+                bVal = b.date ? parseInt(b.date.split('-')[0]) : 0;
+                break;
+            case 'album':
+                aVal = a.album.toLowerCase();
+                bVal = b.album.toLowerCase();
+                return currentSort.direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            case 'artist':
+                const artistsA = Array.isArray(a.artists) ? a.artists.join(', ') : (a.artist || '');
+                const artistsB = Array.isArray(b.artists) ? b.artists.join(', ') : (b.artist || '');
+                aVal = artistsA.toLowerCase();
+                bVal = artistsB.toLowerCase();
+                return currentSort.direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        }
+        return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+    });
     filtered.forEach(a => {
         const li = document.createElement('li');
         li.className = 'album-item';
@@ -234,6 +260,45 @@ if (sortCountSelect) {
     // Sort-Dropdown entfernt
 }
 
+// Sortier-Buttons
+const sortButtons = {
+    sortCount: document.getElementById('sortCount'),
+    sortYear: document.getElementById('sortYear'),
+    sortAlbum: document.getElementById('sortAlbum'),
+    sortArtist: document.getElementById('sortArtist')
+};
+
+function updateSortButtons() {
+    Object.entries(sortButtons).forEach(([key, btn]) => {
+        if (!btn) return;
+        const field = key.replace('sort', '').toLowerCase();
+        if (currentSort.field === field) {
+            btn.classList.add('active');
+            const arrow = currentSort.direction === 'asc' ? '↑' : '↓';
+            btn.textContent = btn.textContent.replace(/[↑↓]/, arrow);
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+Object.entries(sortButtons).forEach(([key, btn]) => {
+    if (!btn) return;
+    const field = key.replace('sort', '').toLowerCase();
+    btn.addEventListener('click', () => {
+        if (currentSort.field === field) {
+            currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.field = field;
+            currentSort.direction = 'desc';
+        }
+        updateSortButtons();
+        renderList(albumInput.value);
+    });
+});
+
+updateSortButtons();
+
 function renderSuggestions(query) {
     // Keine Vorschläge/Hints mehr anzeigen
     suggestions.innerHTML = '';
@@ -261,8 +326,16 @@ document.addEventListener('click', e => {
 });
 
 exportBtn.addEventListener('click', () => {
-    // Entferne source-Feld vor dem Export
-    const exportAlbums = albums.map(({source, ...rest}) => rest);
+    // Konvertiere alle Alben zum neuen Format (artists als Array) und entferne source
+    const exportAlbums = albums.map(a => {
+        const {source, artist, ...rest} = a;
+        // Stelle sicher, dass artists ein Array ist
+        const artists = Array.isArray(a.artists) ? a.artists : (a.artist ? [a.artist] : []);
+        return {
+            ...rest,
+            artists
+        };
+    });
     const data = JSON.stringify(exportAlbums, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
