@@ -88,7 +88,7 @@ if (importCsvBtn && importCsvFile) {
                     alert('Fehler beim Importieren der CSV-Datei.');
                 }
                 filesRead++;
-                if (filesRead === files.length) renderList();
+                if (filesRead === files.length) renderList(albumInput.value);
             };
             reader.readAsText(file);
         });
@@ -201,7 +201,7 @@ function renderList(filter = '') {
             const idx = albums.findIndex(x => x.album === a.album);
             if (idx !== -1) {
                 albums.splice(idx, 1);
-                renderList();
+                renderList(albumInput.value);
             }
         };
         row.appendChild(delBtn);
@@ -395,7 +395,7 @@ importFile.addEventListener('change', e => {
                 alert('Fehler beim Importieren der Datei.');
             }
             filesRead++;
-            if (filesRead === files.length) renderList();
+            if (filesRead === files.length) renderList(albumInput.value);
         };
         reader.readAsText(file);
     });
@@ -435,5 +435,5 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn('DarkModeToggle nicht gefunden!');
     }
-    renderList();
+    renderList('');
 });
