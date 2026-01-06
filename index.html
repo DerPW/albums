@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musik Alben Sammlung</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="statsInfo" class="stats-info" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; font-size: 0.9rem; color: #666;">
+            <span><strong id="artistCount">0</strong> Künstler</span>
+            <span>•</span>
+            <span><strong id="albumCount">0</strong> Alben</span>
+            <span>•</span>
+            <span><strong id="songCount">0</strong> Songs</span>
+        </div>
+        <div class="album-filter-row">
+            <!-- Platzhalter, wird nach unten verschoben -->
+        </div>
+        <div class="input-group">
+            <input type="text" id="albumInput" placeholder="Suchen..." autocomplete="off">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
+            <div class="actions">
+                <button id="importBtn">Importieren</button>
+                <button id="importCsvBtn">CSV-Import</button>
+                <button id="exportBtn">Exportieren</button>
+                <input type="file" id="importFile" accept="application/json" style="display:none" multiple>
+                <input type="file" id="importCsvFile" accept=".csv,text/csv" style="display:none" multiple>
+            </div>
+            <div class="actions">
+                <button id="deleteAllBtn">Alle löschen</button>
+            </div>
+        </div>
+        <!-- Sortierung entfernt, wird immer high -> low ausgeführt -->
+        <ul id="suggestions" class="suggestions"></ul>
+        <ul id="albumList" class="album-list"></ul>
+        </div>
+        <div class="darkmode-switch">
+            <span class="icon-sun"><svg width="22" height="22"><use href="#icon-sun" /></svg></span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="icon-moon"><svg width="22" height="22"><use href="#icon-moon" /></svg></span>
+        </div>
+        <script src="app.js"></script>
+        <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+            <symbol id="icon-trash" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M9 3v1H4v2h16V4h-5V3H9zm-3 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9H6zm2 2h8v10H8V11z"/>
+            </symbol>
+            <symbol id="icon-sun" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                <g stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="4"/>
+                    <line x1="12" y1="20" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="4" y2="12"/>
+                    <line x1="20" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </g>
+            </symbol>
+            <symbol id="icon-moon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M21 12.79A9 9 0 0 1 12.79 3a7 7 0 1 0 8.21 9.79z"/>
+            </symbol>
+        </svg>
+</body>
+</html>

@@ -1,0 +1,400 @@
+.toggle-songs-btn {
+    margin-top: 6px;
+    margin-bottom: 2px;
+    background: #e3e8f0;
+    color: #1976d2;
+    border: none;
+    border-radius: 6px;
+    padding: 2px 12px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+.toggle-songs-btn:hover {
+    background: #1976d2;
+    color: #fff;
+}
+/* Songliste schlicht, keine Deko */
+.album-songs {
+    margin-top: 10px;
+    padding-left: 20px;
+    font-size: 0.82rem;
+    color: #666;
+    list-style: none;
+    width: 100%;
+}
+body.dark .album-songs {
+    color: #aaa;
+}
+.album-songs li {
+    font-size: 0.82rem;
+    padding: 1px 0 1px 0;
+    margin: 0;
+}
+.album-source {
+    font-size: 0.75rem;
+    color: #646363;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+body.dark .album-source {
+    color: #aaa;
+}
+.album-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.album-artist {
+    font-size: 0.92rem;
+    color: #666;
+    font-weight: 400;
+    margin-right: 8px;
+}
+body.dark .album-artist {
+    color: #aaa;
+}
+.stats-info {
+    color: #666;
+}
+body.dark .stats-info {
+    color: #aaa;
+}
+.stats-info strong {
+    color: #1976d2;
+}
+body.dark .stats-info strong {
+    color: #ffa726;
+}
+.icon-moon {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+}
+button:disabled, .actions button:disabled {
+    opacity: 0.55;
+    background: #cfd8dc !important;
+    color: #888 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    border-color: #b0bec5 !important;
+    pointer-events: none;
+    transition: background 0.18s, color 0.18s, opacity 0.18s;
+}
+body.dark button:disabled, body.dark .actions button:disabled {
+    background: #23272a !important;
+    color: #555 !important;
+    border-color: #333 !important;
+}
+/* Hover-Effekt für Listeneinträge */
+.album-item {
+    transition: background 0.18s;
+    cursor: pointer;
+    padding-left: 28px;
+    padding-right: 28px;
+    border-radius: 12px;
+}
+.album-item:hover {
+    background: #e3e8f0;
+}
+body.dark .album-item:hover {
+    background: #31363b;
+}
+/* Custom Tooltip für Badge */
+/* Tooltip exakt zentriert über Badge */
+.custom-tooltip {
+    background: #23272a;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 8px;
+    font-size: 0.98rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+    white-space: nowrap;
+    position: absolute;
+    left: 50%;
+    top: -38px;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+}
+.custom-tooltip.visible {
+    display: block !important;
+    opacity: 1;
+}
+/* Kleines Badge für Gesamtanzahl */
+
+/* Immer sichtbarer Darkmode-Switch unten links */
+.darkmode-switch {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+    background: rgba(255,255,255,0.95);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 6px 16px;
+}
+body.dark .darkmode-switch {
+    background: rgba(32,34,36,0.98);
+}
+/* Badge für Album-Anzahl neben Titel */
+.count-badge {
+    background: #1976d2;
+    color: #fff;
+    border-radius: 12px;
+    padding: 4px 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 16px;
+    min-width: 32px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(25, 118, 210, 0.08);
+    letter-spacing: 1px;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+    vertical-align: middle;
+}
+body.dark .count-badge {
+    background: #ffa726;
+    color: #23272a;
+    box-shadow: 0 1px 4px rgba(255, 167, 38, 0.08);
+}
+body {
+    font-family: 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+button, .actions button, #addBtn, #albumInput {
+    border-radius: 12px !important;
+    font-family: inherit;
+}
+
+.darkmode-switch .icon-sun {
+    color: #fbc02d;
+    margin-right: 10px;
+    margin-left: 0;
+}
+.darkmode-switch .icon-moon {
+    color: #1976d2;
+    margin-left: 10px;
+    margin-right: 0;
+}
+/* Switch Style */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+.switch input:checked + .slider {
+    background-color: #1976d2;
+}
+.switch input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Dark Mode Styles */
+body.dark {
+    background: #181a1b;
+    color: #e0e0e0;
+}
+body.dark .container {
+    background: #23272a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+body.dark h1,
+body.dark .darkmode-label {
+    color: #e0e0e0;
+}
+body.dark #albumInput {
+    background: #23272a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+body.dark .album-list {
+    background: #23272a;
+}
+body.dark .album-item {
+    border-bottom: 1px solid #333;
+}
+body.dark .badge {
+    background: #ffa726;
+    color: #23272a;
+}
+body.dark .suggestions {
+    background: #23272a;
+    border: 1px solid #444;
+}
+body.dark .suggestions li:hover {
+    background: #222;
+}
+body.dark .delete-btn {
+    color: #bbb;
+}
+body.dark .delete-btn:hover {
+    background: #2d2d2d;
+    color: #ff5252;
+}
+body.dark .actions button {
+    background: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+body.dark .actions button:hover {
+    background: #444;
+}
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 32px 24px 24px 24px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+#albumInput {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+#addBtn {
+    padding: 8px 16px;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+#addBtn:hover {
+    background: #1565c0;
+}
+.album-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0 0;
+}
+.album-item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 28px;
+    border-bottom: 1px solid #eee;
+    border-radius: 12px;
+    transition: background 0.18s;
+    cursor: pointer;
+}
+.album-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 8px;
+    color: #888;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s, opacity 0.2s;
+    opacity: 0;
+}
+.album-item:hover .delete-btn {
+    opacity: 1;
+}
+.delete-btn:hover {
+    background: #fbe9e7;
+    color: #d32f2f;
+}
+.album-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.album-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.badge {
+    background: #ff9800;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+    margin-left: 0;
+    flex-shrink: 0;
+}
+.suggestions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 0 4px 4px;
+    max-height: 120px;
+    overflow-y: auto;
+    position: absolute;
+    width: calc(100% - 32px);
+    z-index: 10;
+    display: none;
+}
+.suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.suggestions li:hover {
+    background: #f0f0f0;
+}
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
