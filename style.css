@@ -93,7 +93,7 @@ body.dark button:disabled, body.dark .actions button:disabled {
     cursor: pointer;
     padding-left: 28px;
     padding-right: 28px;
-    border-radius: 12px;
+    border-radius: 8px;
 }
 .album-item:hover {
     background: #e3e8f0;
@@ -274,9 +274,6 @@ body.dark #albumInput {
 body.dark .album-list {
     background: #23272a;
 }
-body.dark .album-item {
-    border-bottom: 1px solid #333;
-}
 body.dark .badge {
     background: #ffa726;
     color: #23272a;
@@ -323,9 +320,9 @@ body.dark .header-section {
     background: #fff;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     border: 2px solid #e0e0e0;
     flex-shrink: 0;
     border-radius: 8px;
@@ -417,8 +414,8 @@ body.dark .clear-search-btn:hover {
     display: flex;
     flex-direction: column;
     padding: 8px 28px;
-    border-bottom: 1px solid #eee;
-    border-radius: 12px;
+    margin: 8px 12px;
+    border-radius: 8px;
     transition: background 0.18s;
     cursor: pointer;
 }
@@ -535,6 +532,9 @@ body.dark .actions button:hover {
     cursor: pointer;
     font-size: 0.85rem;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
 }
 .sort-btn:hover {
     background: #d0d8e0;
