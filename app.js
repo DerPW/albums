@@ -112,8 +112,18 @@ if (importTxtBtn && importTxtFile) {
 let albums = [];
 let currentSort = { field: 'count', direction: 'desc' };
 
+// Set für ausgeklappte Alben global
+const expandedAlbums = new Set();
+
 // Render-Funktion mit neuer Suchlogik (inkl. Songnamen)
 function renderList(filter = '') {
+    // Vor dem Rendern: Merke ausgeklappte Alben
+    expandedAlbums.clear();
+    document.querySelectorAll('.album-item').forEach(item => {
+        if (item && item.dataset.album && item.querySelector('.album-songs') && item.querySelector('.album-songs').style.display === 'block') {
+            expandedAlbums.add(item.dataset.album);
+        }
+    });
     albumList.innerHTML = '';
     let filtered = albums;
     if (filter) {
@@ -154,6 +164,7 @@ function renderList(filter = '') {
     filtered.forEach(a => {
         const li = document.createElement('li');
         li.className = 'album-item';
+        li.dataset.album = a.album;
         
         // Row für Badge, Text und Delete-Button
         const row = document.createElement('div');
@@ -290,14 +301,21 @@ function renderList(filter = '') {
                 songList.appendChild(songLi);
             });
             songList.style.display = 'none';
+                        // Songs ausgeklappt lassen, wenn Album vorher ausgeklappt war
+            // Songs ausgeklappt lassen, wenn Album vorher ausgeklappt war
+            if (expandedAlbums.has(a.album)) {
+                songList.style.display = 'block';
+            }
             li.appendChild(songList);
             li.style.cursor = 'pointer';
             li.addEventListener('click', function(e) {
                 if (e.target.closest('.delete-btn')) return;
                 if (songList.style.display === 'none') {
                     songList.style.display = 'block';
+                    expandedAlbums.add(a.album);
                 } else {
                     songList.style.display = 'none';
+                    expandedAlbums.delete(a.album);
                 }
             });
         }
