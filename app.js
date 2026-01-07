@@ -403,10 +403,11 @@ function addAlbumFromInput() {
 albumInput.addEventListener('input', e => {
     renderSuggestions(albumInput.value);
     renderList(albumInput.value);
-    // Clear-Button anzeigen/verstecken
+    // Clear-Button ist immer sichtbar, aber ggf. deaktiviert
     const clearBtn = document.getElementById('clearSearchBtn');
     if (clearBtn) {
-        clearBtn.style.display = albumInput.value ? 'flex' : 'none';
+        clearBtn.disabled = !albumInput.value;
+        clearBtn.setAttribute('aria-disabled', !albumInput.value);
     }
 });
 
@@ -415,9 +416,10 @@ const clearSearchBtn = document.getElementById('clearSearchBtn');
 if (clearSearchBtn) {
     clearSearchBtn.addEventListener('click', () => {
         albumInput.value = '';
-        clearSearchBtn.style.display = 'none';
         renderList('');
         albumInput.focus();
+        clearSearchBtn.disabled = true;
+        clearSearchBtn.setAttribute('aria-disabled', 'true');
     });
 }
 
