@@ -209,6 +209,8 @@ function renderList(filter = '') {
                 setTimeout(() => {
                     copyBtn.style.color = '';
                 }, 500);
+                // Toast-Nachricht anzeigen
+                showToast(`"${a.album}" kopiert`);
             }).catch(err => {
                 console.error('Fehler beim Kopieren:', err);
             });
@@ -223,8 +225,10 @@ function renderList(filter = '') {
         delBtn.onclick = () => {
             const idx = albums.findIndex(x => x.album === a.album);
             if (idx !== -1) {
+                const albumName = albums[idx].album;
                 albums.splice(idx, 1);
                 renderList(albumInput.value);
+                showToast(`"${albumName}" gelöscht`);
             }
         };
         buttonContainer.appendChild(delBtn);
@@ -477,3 +481,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     renderList('');
 });
+
+// Toast-Benachrichtigung anzeigen
+function showToast(message) {
+    const toastContainer = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    
+    // Toast einblenden
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Toast nach 2.5 Sekunden ausblenden
+    setTimeout(() => {
+        toast.classList.remove('show');
+        // Toast nach Animation entfernen
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 2500);
+}
