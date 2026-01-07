@@ -333,7 +333,6 @@ body.dark .sort-section {
     border-color: #333;
 }
 .list-section {
-    padding: 16px 0;
     overflow-y: auto;
     flex: 1;
     background: #fff;
