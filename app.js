@@ -196,26 +196,48 @@ function renderList(filter = '') {
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'album-buttons';
         
-        // Clipboard-Button
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'copy-btn';
-        copyBtn.title = 'Albumname kopieren';
-        copyBtn.innerHTML = '<svg width="20" height="20" style="vertical-align:middle;"><use href="#icon-clipboard" /></svg>';
-        copyBtn.onclick = (e) => {
+        // Clipboard-Button für Album
+        const copyAlbumBtn = document.createElement('button');
+        copyAlbumBtn.className = 'copy-btn';
+        copyAlbumBtn.title = 'Albumname kopieren';
+        copyAlbumBtn.innerHTML = '<svg width="20" height="20" style="vertical-align:middle;"><use href="#icon-album" /></svg>';
+        copyAlbumBtn.onclick = (e) => {
             e.stopPropagation();
             navigator.clipboard.writeText(a.album).then(() => {
                 // Kurzes visuelles Feedback
-                copyBtn.style.color = '#4caf50';
+                copyAlbumBtn.style.color = '#4caf50';
                 setTimeout(() => {
-                    copyBtn.style.color = '';
+                    copyAlbumBtn.style.color = '';
                 }, 500);
                 // Toast-Nachricht anzeigen
-                showToast(`"${a.album}" kopiert`);
+                showToast(`Album "${a.album}" kopiert`);
             }).catch(err => {
                 console.error('Fehler beim Kopieren:', err);
             });
         };
-        buttonContainer.appendChild(copyBtn);
+        buttonContainer.appendChild(copyAlbumBtn);
+        
+        // Clipboard-Button für Interpret
+        const copyArtistBtn = document.createElement('button');
+        copyArtistBtn.className = 'copy-btn';
+        copyArtistBtn.title = 'Interpret kopieren';
+        copyArtistBtn.innerHTML = '<svg width="20" height="20" style="vertical-align:middle;"><use href="#icon-user" /></svg>';
+        copyArtistBtn.onclick = (e) => {
+            e.stopPropagation();
+            const firstArtist = a.artists && a.artists.length > 0 ? a.artists[0] : '';
+            navigator.clipboard.writeText(firstArtist).then(() => {
+                // Kurzes visuelles Feedback
+                copyArtistBtn.style.color = '#4caf50';
+                setTimeout(() => {
+                    copyArtistBtn.style.color = '';
+                }, 500);
+                // Toast-Nachricht anzeigen
+                showToast(`Interpret "${firstArtist}" kopiert`);
+            }).catch(err => {
+                console.error('Fehler beim Kopieren:', err);
+            });
+        };
+        buttonContainer.appendChild(copyArtistBtn);
         
         // Trashcan-Button
         const delBtn = document.createElement('button');
