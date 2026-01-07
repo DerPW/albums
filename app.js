@@ -182,10 +182,26 @@ function renderList(filter = '') {
         const artistSpan = document.createElement('div');
         artistSpan.className = 'album-artist';
         const artistsList = Array.isArray(a.artists) ? a.artists : [a.artist];
-        artistSpan.textContent = artistsList.join(', ');
+        // Jeden Artist einzeln rendern
+        artistsList.forEach((artist, idx) => {
+            const singleArtist = document.createElement('span');
+            singleArtist.className = 'artist-chip';
+            singleArtist.textContent = artist;
+            singleArtist.title = 'Klicke, um diesen Interpreten zu suchen';
+            singleArtist.style.cursor = 'pointer';
+            singleArtist.addEventListener('click', function(e) {
+                e.stopPropagation();
+                albumInput.value = artist;
+                renderList(artist);
+            });
+            artistSpan.appendChild(singleArtist);
+            if (idx < artistsList.length - 1) {
+                artistSpan.appendChild(document.createTextNode(', '));
+            }
+        });
         if (a.date) {
             const year = a.date.split('-')[0];
-            artistSpan.textContent += ' • ' + year;
+            artistSpan.appendChild(document.createTextNode(' • ' + year));
         }
         textContainer.appendChild(artistSpan);
         

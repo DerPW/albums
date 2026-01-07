@@ -1,3 +1,19 @@
+/* Einzelne Artist-Chips klickbar und mit Hover-Effekt */
+.artist-chip {
+    display: inline-block;
+    padding: 2px 3px;
+    border-radius: 6px;
+    background: transparent;
+    transition: background 0.18s, color 0.18s;
+}
+.artist-chip:hover {
+    background: #e3e8f0;
+    color: #1976d2;
+}
+body.dark .artist-chip:hover {
+    background: #31363b;
+    color: #ffa726;
+}
 .toggle-songs-btn {
     margin-top: 6px;
     margin-bottom: 2px;
