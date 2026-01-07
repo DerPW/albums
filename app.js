@@ -226,9 +226,15 @@ function renderList(filter = '') {
             const idx = albums.findIndex(x => x.album === a.album);
             if (idx !== -1) {
                 const albumName = albums[idx].album;
+                const deletedAlbum = albums[idx];
                 albums.splice(idx, 1);
                 renderList(albumInput.value);
-                showToast(`"${albumName}" gelöscht`);
+                showToast(`"${albumName}" gelöscht`, () => {
+                    // Undo: Album wiederherstellen
+                    albums.splice(idx, 0, deletedAlbum);
+                    renderList(albumInput.value);
+                    showToast(`"${albumName}" wiederhergestellt`);
+                });
             }
         };
         buttonContainer.appendChild(delBtn);
@@ -483,11 +489,33 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Toast-Benachrichtigung anzeigen
-function showToast(message) {
+function showToast(message, undoCallback) {
     const toastContainer = document.getElementById('toastContainer');
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = message;
+    
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = message;
+    toast.appendChild(messageSpan);
+    
+    let timeoutId;
+    
+    // Wenn Undo-Callback vorhanden, Button hinzufügen
+    if (undoCallback) {
+        const undoBtn = document.createElement('button');
+        undoBtn.className = 'toast-undo-btn';
+        undoBtn.textContent = 'Rückgängig';
+        undoBtn.onclick = () => {
+            clearTimeout(timeoutId);
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+            undoCallback();
+        };
+        toast.appendChild(undoBtn);
+    }
+    
     toastContainer.appendChild(toast);
     
     // Toast einblenden
@@ -495,12 +523,24 @@ function showToast(message) {
         toast.classList.add('show');
     }, 10);
     
-    // Toast nach 2.5 Sekunden ausblenden
-    setTimeout(() => {
+    // Funktion zum Ausblenden
+    const hideToast = () => {
         toast.classList.remove('show');
-        // Toast nach Animation entfernen
         setTimeout(() => {
             toast.remove();
         }, 300);
-    }, 2500);
+    };
+    
+    // Toast nach 4 Sekunden ausblenden
+    timeoutId = setTimeout(hideToast, 4000);
+    
+    // Hover-Effekt: Timer stoppen beim Hover
+    toast.addEventListener('mouseenter', () => {
+        clearTimeout(timeoutId);
+    });
+    
+    // Hover-Effekt: Timer neu starten beim Verlassen
+    toast.addEventListener('mouseleave', () => {
+        timeoutId = setTimeout(hideToast, 4000);
+    });
 }
