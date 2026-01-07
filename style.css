@@ -683,9 +683,9 @@ body.dark .sort-btn.active {
 }
 
 body.dark .toast {
-    background: rgba(255, 255, 255, 0.92);
-    color: #23272a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background: rgba(32,34,36,0.98);
+    color: #ffa726;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 body.dark .toast-undo-btn {
