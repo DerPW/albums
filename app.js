@@ -192,6 +192,29 @@ function renderList(filter = '') {
         info.appendChild(textContainer);
         row.appendChild(info);
         
+        // Button-Container für Copy und Delete
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'album-buttons';
+        
+        // Clipboard-Button
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.title = 'Albumname kopieren';
+        copyBtn.innerHTML = '<svg width="20" height="20" style="vertical-align:middle;"><use href="#icon-clipboard" /></svg>';
+        copyBtn.onclick = (e) => {
+            e.stopPropagation();
+            navigator.clipboard.writeText(a.album).then(() => {
+                // Kurzes visuelles Feedback
+                copyBtn.style.color = '#4caf50';
+                setTimeout(() => {
+                    copyBtn.style.color = '';
+                }, 500);
+            }).catch(err => {
+                console.error('Fehler beim Kopieren:', err);
+            });
+        };
+        buttonContainer.appendChild(copyBtn);
+        
         // Trashcan-Button
         const delBtn = document.createElement('button');
         delBtn.className = 'delete-btn';
@@ -204,7 +227,8 @@ function renderList(filter = '') {
                 renderList(albumInput.value);
             }
         };
-        row.appendChild(delBtn);
+        buttonContainer.appendChild(delBtn);
+        row.appendChild(buttonContainer);
         li.appendChild(row);
         
         // Songliste unterhalb des Album-Items
@@ -313,7 +337,23 @@ function addAlbumFromInput() {
 albumInput.addEventListener('input', e => {
     renderSuggestions(albumInput.value);
     renderList(albumInput.value);
+    // Clear-Button anzeigen/verstecken
+    const clearBtn = document.getElementById('clearSearchBtn');
+    if (clearBtn) {
+        clearBtn.style.display = albumInput.value ? 'flex' : 'none';
+    }
 });
+
+// Clear-Button Funktionalität
+const clearSearchBtn = document.getElementById('clearSearchBtn');
+if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+        albumInput.value = '';
+        clearSearchBtn.style.display = 'none';
+        renderList('');
+        albumInput.focus();
+    });
+}
 
 albumInput.addEventListener('keydown', e => {
     // Enter macht nichts mehr

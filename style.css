@@ -157,12 +157,12 @@ body.dark .darkmode-switch {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     padding: 6px 16px;
     font-size: 0.85rem;
-    color: #666;
+    color: #1976d2;
     font-weight: 500;
 }
 body.dark .version-badge {
     background: rgba(32,34,36,0.98);
-    color: #aaa;
+    color: #ffa726;
 }
 /* Badge für Album-Anzahl neben Titel */
 .count-badge {
@@ -186,11 +186,14 @@ body.dark .count-badge {
     color: #23272a;
     box-shadow: 0 1px 4px rgba(255, 167, 38, 0.08);
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 body {
     font-family: 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
     background: #f4f4f4;
-    margin: 0;
-    padding: 0;
 }
 button, .actions button, #addBtn, #albumInput {
     border-radius: 12px !important;
@@ -201,6 +204,8 @@ button, .actions button, #addBtn, #albumInput {
     color: #fbc02d;
     margin-right: 10px;
     margin-left: 0;
+    display: flex;
+    align-items: center;
 }
 .darkmode-switch .icon-moon {
     color: #1976d2;
@@ -298,10 +303,14 @@ body.dark .delete-btn:hover {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
 }
 .header-section {
     padding: 32px 24px 24px 24px;
     border-bottom: 2px solid #e0e0e0;
+    flex-shrink: 0;
 }
 body.dark .header-section {
     border-bottom-color: #333;
@@ -315,6 +324,7 @@ body.dark .header-section {
     gap: 8px;
     flex-wrap: wrap;
     border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
 }
 body.dark .sort-section {
     background: #1a1d1f;
@@ -322,6 +332,8 @@ body.dark .sort-section {
 }
 .list-section {
     padding: 16px 0;
+    overflow-y: auto;
+    flex: 1;
 }
 h1 {
     text-align: center;
@@ -331,10 +343,41 @@ h1 {
     display: flex;
     gap: 8px;
     margin-bottom: 8px;
+    position: relative;
+}
+.clear-search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #888;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+}
+.clear-search-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+body.dark .clear-search-btn {
+    color: #aaa;
+}
+body.dark .clear-search-btn:hover {
+    background: #444;
+    color: #fff;
 }
 #albumInput {
     flex: 1;
-    padding: 8px 12px;
+    padding: 8px 36px 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
@@ -372,19 +415,32 @@ h1 {
     justify-content: space-between;
     width: 100%;
 }
-.delete-btn {
+.album-buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+.delete-btn, .copy-btn {
     background: none;
     border: none;
     cursor: pointer;
     padding: 4px;
-    margin-left: 8px;
     color: #888;
     border-radius: 4px;
     transition: background 0.2s, color 0.2s, opacity 0.2s;
     opacity: 0;
 }
-.album-item:hover .delete-btn {
+.album-item:hover .delete-btn,
+.album-item:hover .copy-btn {
     opacity: 1;
+}
+.copy-btn:hover {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+body.dark .copy-btn:hover {
+    background: #2d3436;
+    color: #64b5f6;
 }
 .delete-btn:hover {
     background: #fbe9e7;
