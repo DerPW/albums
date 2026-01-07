@@ -135,14 +135,65 @@ body.dark .album-item:hover {
     bottom: 24px;
     display: flex;
     align-items: center;
+    justify-content: center;
     z-index: 9999;
     background: rgba(255,255,255,0.95);
-    border-radius: 16px;
+    border-radius: 50%;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 6px 16px;
+    padding: 5px 8px;
+    border-radius: 50px;
+    min-width: 30px;
+    min-height: 30px;
 }
 body.dark .darkmode-switch {
     background: rgba(32,34,36,0.98);
+}
+/* Bei Hover: Border-Radius anpassen */
+.darkmode-switch:hover {
+    border-radius: 50px;
+    padding: 5px 8px;
+    min-width: 40px;
+}
+/* Switch und inaktives Icon standardmäßig ausblenden */
+.darkmode-switch .switch {
+    width: 0;
+    opacity: 0;
+    margin: 0;
+    transition: width 0.25s cubic-bezier(.4,0,.2,1), opacity 0.25s cubic-bezier(.4,0,.2,1), margin 0.25s cubic-bezier(.4,0,.2,1);
+}
+/* Im Light Mode: Mond ausblenden */
+body:not(.dark) .darkmode-switch .icon-moon {
+    width: 0;
+    opacity: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+/* Im Dark Mode: Sonne ausblenden */
+body.dark .darkmode-switch .icon-sun {
+    width: 0;
+    opacity: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+/* Bei Hover: Alles einblenden */
+.darkmode-switch:hover .switch {
+    width: 32px;
+    opacity: 1;
+    margin: 0 8px;
+}
+body:not(.dark) .darkmode-switch:hover .icon-moon {
+    width: 18px;
+    opacity: 1;
+    /* margin-left: 8px; */
+    margin-right: 0;
+}
+body.dark .darkmode-switch:hover .icon-sun {
+    width: 18px;
+    opacity: 1;
+    /* margin-right: 8px; */
+    margin-left: 0;
 }
 /* Versionsnummer unten rechts */
 .version-badge {
@@ -190,6 +241,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 body {
     font-family: 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
@@ -202,15 +254,15 @@ button, .actions button, #addBtn, #albumInput {
 
 .darkmode-switch .icon-sun {
     color: #fbc02d;
-    margin-right: 10px;
-    margin-left: 0;
     display: flex;
     align-items: center;
+    /* transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease; */
 }
 .darkmode-switch .icon-moon {
     color: #1976d2;
-    margin-left: 10px;
-    margin-right: 0;
+    display: flex;
+    align-items: center;
+    /* transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease; */
 }
 /* Switch Style */
 .switch {
@@ -229,11 +281,11 @@ button, .actions button, #addBtn, #albumInput {
     cursor: pointer;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 44px;
+    height: 24px;
     background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
+    transition: background-color 0.4s;
+    border-radius: 22px;
 }
 .slider:before {
     position: absolute;
@@ -241,9 +293,9 @@ button, .actions button, #addBtn, #albumInput {
     height: 18px;
     width: 18px;
     left: 3px;
-    bottom: 3px;
+    top: 3px;
     background-color: white;
-    transition: .4s;
+    transition: transform 0.4s;
     border-radius: 50%;
 }
 .switch input:checked + .slider {
