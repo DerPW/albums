@@ -259,8 +259,8 @@ body.dark {
     color: #e0e0e0;
 }
 body.dark .container {
-    background: #23272a;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    background: transparent;
+    box-shadow: none;
 }
 body.dark h1,
 body.dark .darkmode-label {
@@ -298,42 +298,55 @@ body.dark .delete-btn:hover {
 .container {
     max-width: 500px;
     margin: 40px auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: transparent;
     padding: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 80px);
+    gap: 16px;
 }
 .header-section {
     padding: 32px 24px 24px 24px;
-    border-bottom: 2px solid #e0e0e0;
+    border: 2px solid #e0e0e0;
     flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 body.dark .header-section {
-    border-bottom-color: #333;
+    border-color: #333;
+    background: #23272a;
 }
 .sort-section {
     padding: 16px 24px;
-    background: #f9f9f9;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    border-bottom: 1px solid #e0e0e0;
+    border: 2px solid #e0e0e0;
     flex-shrink: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 body.dark .sort-section {
-    background: #1a1d1f;
-    border-bottom-color: #333;
+    background: #23272a;
+    border-color: #333;
 }
 .list-section {
     padding: 16px 0;
     overflow-y: auto;
     flex: 1;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+body.dark .list-section {
+    background: #23272a;
+    border-color: #333;
 }
 h1 {
     text-align: center;
