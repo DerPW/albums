@@ -1,3 +1,6 @@
+.album-item:last-child {
+    border-radius: 6px 6px 12px 12px;
+}
 /* Einzelne Artist-Chips klickbar und mit Hover-Effekt */
 .artist-chip {
     display: inline-block;
@@ -490,10 +493,11 @@ body.dark .clear-search-btn:hover {
     flex-direction: column;
     padding: 8px 28px;
     margin: 8px 12px;
-    border-radius: 25px;
+    border-radius: 6px;
     transition: background 0.18s;
     cursor: pointer;
 }
+
 .album-item-row {
     display: flex;
     align-items: center;
