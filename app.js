@@ -204,6 +204,7 @@ function renderList(filter = '') {
                 e.stopPropagation();
                 albumInput.value = artist;
                 renderList(artist);
+                albumInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
             artistSpan.appendChild(singleArtist);
             if (idx < artistsList.length - 1) {
